@@ -9,6 +9,7 @@
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="manifest" href="manifest.webmanifest" />
 
   <title>Budget Tracker</title>
 </head>
@@ -44,5 +45,15 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <script src="./assets/js/index.jsx"></script>
   <script src="./assets/js/db.jsx"></script>
+  <script>
+    //check for serviceWorker
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("service-worker.js").then(reg => {
+          console.log("Service worker located.", reg);
+        });
+      });
+    }
+  </script>
 </body>
 </html>
