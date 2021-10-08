@@ -62,9 +62,9 @@ function populateChart() {
     graphChart.destroy();
   }
 
-  let ctx = document.getElementById("graphChart").getContext("2d");
+  let context = document.getElementById("graphChart").getContext("2d");
 
-  graphChart = new Chart(ctx, {
+  graphChart = new Chart(context, {
     type: "line",
     data: {
       labels,
