@@ -1,5 +1,5 @@
-let transactionArray = [];
-let graphChart;
+let transactions = [];
+let myChart;
 
 fetch("/api/transaction")
   .then((res) => {
@@ -7,7 +7,7 @@ fetch("/api/transaction")
   })
   .then((data) => {
     // saves db to global var
-    transactionArray = data;
+    transactions = data;
 
     populateTotal();
     populateTable();
@@ -16,7 +16,7 @@ fetch("/api/transaction")
 
 function populateTotal() {
   // reduce transactions to a total value
-  let total = transactionArray.reduce((total, t) => {
+  let total = transactions.reduce((total, t) => {
     return total + parseInt(t.value);
   }, 0);
 
@@ -28,7 +28,7 @@ function populateTable() {
   let tbody = document.querySelector("#tbody");
   tbody.innerHTML = "";
 
-  transactionArray.forEach((transaction) => {
+  transactions.forEach((transaction) => {
     // dynamically populate rows
     let tr = document.createElement("tr");
     tr.innerHTML = `
@@ -42,7 +42,7 @@ function populateTable() {
 
 function populateChart() {
   // copy and reverses array
-  let reversed = transactionArray.slice().reverse();
+  let reversed = transactions.slice().reverse();
   let sum = 0;
 
   // dates labels
@@ -58,13 +58,13 @@ function populateChart() {
   });
 
   // remove old chart
-  if (graphChart) {
-    graphChart.destroy();
+  if (myChart) {
+    myChart.destroy();
   }
 
-  let context = document.getElementById("graphChart").getContext("2d");
+  let context = document.getElementById("myChart").getContext("2d");
 
-  graphChart = new Chart(context, {
+  myChart = new Chart(context, {
     type: "line",
     data: {
       labels,
@@ -106,7 +106,7 @@ function sendTransaction(isAdding) {
   }
 
   // add to array
-  transactionArray.unshift(transaction);
+  transactions.unshift(transaction);
 
   // populate ui with new record
   populateChart();
